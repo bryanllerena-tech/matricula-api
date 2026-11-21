@@ -41,8 +41,8 @@ public class RecordarMatricula implements Task {
                 .with(peticion -> peticion.header("Authorization", "Bearer " + credencial)
                         .queryParam("curso", curso)
                         .queryParam("estado", estado)));
-        Long id = SerenityRest.lastResponse().jsonPath().getList("$", Map.class).stream()
-                .map(fila -> (Map<?, ?>) fila)
+        List<Map<String, Object>> filas = SerenityRest.lastResponse().jsonPath().getList("");
+        Long id = filas.stream()
                 .filter(fila -> curso.equals(fila.get("codigoCurso"))
                         && estado.equals(fila.get("estado")))
                 .map(fila -> ((Number) fila.get("id")).longValue())
